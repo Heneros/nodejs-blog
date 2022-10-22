@@ -2,8 +2,8 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import moongoose from 'moongoose';
 import { DB_PASSWORD } from './keys.js';
-
-
+import { registerValidation } from './validations/auth.js';
+import { validationResult } from 'express-validator';
 
 const app = express();
 
@@ -19,26 +19,15 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Hello World1');
 });
-
-app.post('/auth/login', (req, res) => {
-    console.log(req.body);
-    // {
-    //     "email": "test@example.com",
-    //     "password": "qwerty"
-    // }
-    if (req.body.email === 'test@example.com') {
-        const token = jwt.sign(
-            {
-                email: req.body.email,
-                fullName: 'qwerty'
-            },
-            'testsecret'
-        )
+/// check if fields before starts registerValidation
+app.post('/auth/register', registerValidation, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors.array());
     }
     res.json({
         success: true,
-        token
-    });
+    })
 });
 
 app.listen(4444, (err) => {
