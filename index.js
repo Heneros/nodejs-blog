@@ -23,6 +23,13 @@ app.get('/', (req, res) => {
     res.send('Hello World1');
 });
 
+app.post('/auth/login', async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.body.email });
+    } catch (err) {
+
+    }
+});
 
 
 
