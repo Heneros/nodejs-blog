@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 
 import { DB_PASSWORD } from './keys.js';
-import { registerValidation } from './validations/auth.js';
+import { registerValidation, loginValidation } from './validations.js';
 
 import checkAuth from './utils/checkAuth.js';
 // import { register, login, getMe } from './controllers/UserController';
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     res.send('Hello World1');
 });
 
-app.post('/auth/login', UserController.login);
+app.post('/auth/login', loginValidation, UserController.login);
 
 
 
