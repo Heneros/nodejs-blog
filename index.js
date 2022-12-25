@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 
 
 import { DB_PASSWORD } from './keys.js';
-import { registerValidation, loginValidation } from './validations.js';
+import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
 import checkAuth from './utils/checkAuth.js';
 // import { register, login, getMe } from './controllers/UserController';
 
 //Все методы сохранить в UserController
-import { UserController } from './controllers/index.js';
-
+import * as UserController from './controllers/UserController.js';
+import * as PostController from './controllers/PostController.js';
 const app = express();
 
 mongoose
@@ -36,8 +36,9 @@ app.post('/auth/register', registerValidation, UserController.register);
 
 ///checkAuth проверяет можно ли возвращать некоторые данные
 ///checkAuth сначало выполняется функция. а потом остальное
-app.get('/auth/me', checkAuth, UserController.getMe)
+app.get('/auth/me', checkAuth, UserController.getMe);
 
+app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 
 app.listen(4444, (err) => {
     if (err) {
