@@ -36,7 +36,10 @@ app.post('/auth/register', registerValidation, UserController.register);
 
 ///checkAuth проверяет можно ли возвращать некоторые данные
 ///checkAuth сначало выполняется функция. а потом остальное
+app.get('/posts', PostController.getAll);
+app.get('/posts/:id', PostController.getOne);
 app.get('/auth/me', checkAuth, UserController.getMe);
+
 
 app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 

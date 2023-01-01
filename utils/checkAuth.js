@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 
 export default (req, res, next) => {
-    ///Передавать токе без слова Bearer.
+    ///Передавать токен без слова Bearer.
     const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
     if (token) {
         ///Расшифровать токен
@@ -12,14 +12,14 @@ export default (req, res, next) => {
             next();
         } catch (e) {
             return res.status(403).json({
-                message: 'No access',
+                message: 'No access token',
             });
         }
 
     } else {
         ///Return тут чтобы два раза не передавался код
         return res.status(403).json({
-            message: 'No access',
+            message: 'No access 403',
         });
     }
     // console.log(token);
