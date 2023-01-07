@@ -32,16 +32,16 @@ app.post('/auth/login', loginValidation, UserController.login);
 
 /// check if fields before starts registerValidation
 app.post('/auth/register', registerValidation, UserController.register);
-
+app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 
 ///checkAuth проверяет можно ли возвращать некоторые данные
 ///checkAuth сначало выполняется функция. а потом остальное
 app.get('/posts', PostController.getAll);
 app.get('/posts/:id', PostController.getOne);
 app.get('/auth/me', checkAuth, UserController.getMe);
+app.delete('/posts/:id', checkAuth, PostController.remove);
 
 
-app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 
 app.listen(4444, (err) => {
     if (err) {
