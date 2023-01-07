@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-
+import multer from 'multer';
 
 import { DB_PASSWORD } from './keys.js';
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
@@ -17,6 +17,16 @@ mongoose
     .connect(`mongodb+srv://admin:${DB_PASSWORD}@cluster0.mr4lmgx.mongodb.net/blog?retryWrites=true&w=majority`)
     .then(() => console.log('DB connected'))
     .catch(() => console.log('DB error', err))
+
+
+const storage = multer.diskStorage({
+    destination: (_, __, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (_, file, cb) => {
+        cb(null, file.originalname);
+    },
+});
 
 //express read json request data
 app.use(express.json());
@@ -39,8 +49,9 @@ app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 app.get('/posts', PostController.getAll);
 app.get('/posts/:id', PostController.getOne);
 app.get('/auth/me', checkAuth, UserController.getMe);
-app.delete('/posts/:id', checkAuth, PostController.remove);
 
+app.delete('/posts/:id', checkAuth, PostController.remove);
+app.patch('/posts/:id', PostController.update)
 
 
 app.listen(4444, (err) => {
