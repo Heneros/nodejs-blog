@@ -5,12 +5,12 @@ import multer from 'multer';
 import { DB_PASSWORD } from './keys.js';
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
-import checkAuth from './utils/checkAuth.js';
 // import { register, login, getMe } from './controllers/UserController';
 
 //Все методы сохранить в UserController
-import * as UserController from './controllers/UserController.js';
-import * as PostController from './controllers/PostController.js';
+import { UserController, PostController } from './controllers/index.js';
+
+import { handleValidationErrors, checkAuth } from './utils/index.js';
 const app = express();
 
 mongoose
@@ -32,18 +32,17 @@ const upload = multer({ storage });
 
 //express read json request data
 app.use(express.json());
-
+//express display in browser static files from folder uploads
+app.use('/uploads', express.static('uploads'))
 
 app.get('/', (req, res) => {
     res.send('Hello World1');
 });
 
-app.post('/auth/login', loginValidation, UserController.login);
-
-
+app.post('/auth/login', handleValidationErrors, loginValidation, UserController.login);
 
 /// check if fields before starts registerValidation
-app.post('/auth/register', registerValidation, UserController.register);
+app.post('/auth/register', handleValidationErrors, registerValidation, UserController.register);
 app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 
 ///checkAuth проверяет можно ли возвращать некоторые данные
@@ -53,7 +52,7 @@ app.get('/posts/:id', PostController.getOne);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 app.delete('/posts/:id', checkAuth, PostController.remove);
-app.patch('/posts/:id', PostController.update)
+app.patch('/posts/:id', postCreateValidation, PostController.update)
 
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
