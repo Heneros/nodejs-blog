@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
+import cors from 'cors';
 
 import { DB_PASSWORD } from './keys.js';
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
@@ -32,6 +33,7 @@ const upload = multer({ storage });
 
 //express read json request data
 app.use(express.json());
+app.use(cors());
 //express display in browser static files from folder uploads
 app.use('/uploads', express.static('uploads'))
 
