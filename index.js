@@ -49,7 +49,9 @@ app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 
 ///checkAuth проверяет можно ли возвращать некоторые данные
 ///checkAuth сначало выполняется функция. а потом остальное
+app.get('/tags', PostController.getLastTags);
 app.get('/posts', PostController.getAll);
+app.get('/posts/tags', PostController.getLastTags);
 app.get('/posts/:id', PostController.getOne);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
