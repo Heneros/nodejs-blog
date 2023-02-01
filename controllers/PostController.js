@@ -88,7 +88,7 @@ export const remove = async (req, res) => {
             }
             else if (!doc) {
                 res.status(404).json({
-                    message: 'Post not finded',
+                    message: 'Post not found',
                 });
             }
             res.json({
@@ -109,7 +109,7 @@ export const create = async (req, res) => {
     try {
         const doc = new PostModel({
             title: req.body.title,
-            text: req.body.title,
+            text: req.body.text,
             imageUrl: req.body.imageUrl,
             tags: req.body.tags,
             user: req.userId

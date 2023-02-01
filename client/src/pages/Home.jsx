@@ -32,8 +32,7 @@ export const Home = () => {
         <Tab label="Popular" />
       </Tabs>
       <Grid container spacing={4}>
-        <Grid xs={8} item>
-          {/* Если посты или нету */}
+        <Grid xs={8} >
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => isPostsLoading ?
           (  <Post
               key={index}

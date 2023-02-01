@@ -32,6 +32,8 @@ export const Post = ({
   const onClickRemove = () => { };
 
   return (
+    <>
+
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
         <div className={styles.editButtons}>
@@ -79,5 +81,6 @@ export const Post = ({
         </div>
       </div>
     </div>
+    </>
   );
 };

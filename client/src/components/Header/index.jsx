@@ -33,7 +33,7 @@ export const Header = () => {
                   <Button variant="contained">Write post</Button>
                 </Link>
                 <Button onClick={onClickLogout} variant="contained" color="error">
-                  Выйти
+                  Log out
                 </Button>
               </>
             ) : (
