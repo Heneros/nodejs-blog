@@ -34,10 +34,10 @@ export const Home = () => {
       <Grid container spacing={4}>
         <Grid xs={8} >
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => isPostsLoading ?
-          (  <Post
+            (<Post
               key={index}
               isLoading={true}
-            /> ): (
+            />) : (
               <Post
                 id={obj._id}
                 title={obj.title}
@@ -58,15 +58,15 @@ export const Home = () => {
             items={[
               {
                 user: {
-                  fullName: 'Вася Пупкин',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+                  fullName: 'L',
+                  avatarUrl: 'https://static.wikia.nocookie.net/mangadeathnote/images/0/09/L_Lawliet.jpg/revision/latest/scale-to-width-down/270?cb=20120526132016&path-prefix=fr',
                 },
                 text: 'Это тестовый комментарий',
               },
               {
                 user: {
-                  fullName: 'Иван Иванов',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
+                  fullName: 'Light',
+                  avatarUrl: 'https://static.wikia.nocookie.net/deathnote/images/3/33/Light_Yagami_-_Anime.png/revision/latest?cb=20190304212220&path-prefix=es',
                 },
                 text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
               },
