@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import styles from './Login.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { fetchAuth, selectIsAuth } from '../../redux/slices/auth';
+import { fetchAuth, fetchRegister, selectIsAuth } from '../../redux/slices/auth';
 import { Navigate } from 'react-router-dom';
 
 export const Registration = () => {
@@ -17,10 +17,10 @@ export const Registration = () => {
 
 
   ////Выводиться в форме value
-  const { register, handleSubmit, setError, formState: { errors, isValid } }
+  const { register, handleSubmit, formState: { errors, isValid } }
     = useForm({
       defaultValues: {
-        fullname: 'Yagami Light',
+        fullName: 'Yagami Light',
         email: 'yagami@gmail.com',
         password: '123dadada'
       },
@@ -29,17 +29,14 @@ export const Registration = () => {
 
 
   const onSubmit = async (values) => {
-    const data = await dispatch(fetchAuth(values));
+    const data = await dispatch(fetchRegister(values));
     if (!data.payload) {
       return alert('Failed to log in');
     }
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
-    } else {
-      alert('Failed to log in');
     }
     // console.log(values);
-    dispatch(fetchAuth(values))
   }
   if (isAuth) {
     return <Navigate to="/" />
@@ -58,25 +55,27 @@ export const Registration = () => {
         <TextField
           className={styles.field}
           label="Full Name"
-          error={Boolean(errors.fullname?.message)}
-          helperText={errors.fullname?.message}
-          {...register('fullname', { required: 'Enter Full Name' })}
+          error={Boolean(errors.fullName?.message)}
+          helperText={errors.fullName?.message}
+          {...register('fullName', { required: 'Enter Full Name' })}
           fullWidth />
         <TextField
           className={styles.field}
           label="Email"
+          type="email"
+          {...register('email', { required: 'Enter email' })}
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
-          {...register('email', { required: 'Enter email' })}
           fullWidth />
         <TextField
           className={styles.field}
           label="Password"
+          type="password"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
           {...register('password', { required: 'Enter password' })}
           fullWidth />
-          {/* Если неправильные филды то кнопка отключена */}
+        {/* Если неправильные филды то кнопка отключена */}
         <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
           Register
         </Button>
