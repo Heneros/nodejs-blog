@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from 'react-markdown';
 
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
@@ -43,9 +44,10 @@ export const FullPost = () => {
         tags={data.tags}
         isFullPost
       >
-        <p>
+        {/* <p>
           {data.text}
-        </p>
+        </p> */}
+        <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock
         items={[
