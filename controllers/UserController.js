@@ -96,7 +96,7 @@ export const getMe = async (req, res) => {
                 message: 'User not found'
             });
         }
-        //Возвращает юзера
+        //Возвращает юзера без пароля
         const { passwordHash, ...userData } = user._doc;
         res.json({ userData })
     } catch (err) {
